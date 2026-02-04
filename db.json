@@ -1,11 +1,57 @@
 {
   "projects": [
     {
-      "id": "8cfb",
-      "title": "One aside section",
-      "desc": "very good",
-      "tech": "REACT, Node ,MOngodb"
+      "id": 1,
+      "title": "E-Commerce Platform v2.0",
+      "desc": "Full-stack online store with payment gateway integration and real-time analytics",
+      "tech": "React, Node.js, MongoDB, Stripe, AWS Lambda",
+      "status": "active",
+      "createdAt": "2026-01-15T10:30:00Z"
+    },
+    {
+      "id": 2,
+      "title": "Analytics Dashboard Pro",
+      "desc": "Enterprise business intelligence platform with live data visualization",
+      "tech": "Vue.js, D3.js, Python, PostgreSQL, Redis",
+      "status": "active",
+      "createdAt": "2026-02-01T14:20:00Z"
+    },
+    {
+      "id": 3,
+      "title": "AI Chatbot Framework",
+      "desc": "Multi-language conversational AI with WebSocket streaming",
+      "tech": "Python, OpenAI API, FastAPI, WebSocket, Docker",
+      "status": "paused",
+      "createdAt": "2026-01-28T09:15:00Z"
     }
   ],
-  "clients": []
+  "clients": [
+    {
+      "id": 1,
+      "name": "Acme Corporation Ltd",
+      "email": "contact@acme-corp.com",
+      "status": "Active",
+      "phone": "+1-555-0100",
+      "revenue": "$2.4M",
+      "createdAt": "2026-01-10T08:45:00Z"
+    },
+    {
+      "id": 2,
+      "name": "TechNova Solutions Inc",
+      "email": "partnerships@technova.io",
+      "status": "Active",
+      "phone": "+1-555-0200",
+      "revenue": "$1.8M",
+      "createdAt": "2026-01-20T11:30:00Z"
+    },
+    {
+      "id": 3,
+      "name": "StartupHub Ventures",
+      "email": "business@startuphub.co",
+      "status": "Pending",
+      "phone": "+1-555-0300",
+      "revenue": "$450K",
+      "createdAt": "2026-02-02T16:25:00Z"
+    }
+  ]
 }
