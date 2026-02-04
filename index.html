@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Ultra // Professional OS</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* --- Professional Theme Engine --- */
+        :root {
+            --bg: #0f1115;
+            --surface: #1a1d23;
+            --surface-hover: #23272f;
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.3);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --border: rgba(255, 255, 255, 0.06);
+            --3d-shadow: rgba(0, 0, 0, 0.6);
+            --card-radius: 24px;
+        }
+
+        [data-theme="white"] {
+            --bg: #f1f5f9;
+            --surface: #ffffff;
+            --surface-hover: #f8fafc;
+            --accent: #2563eb;
+            --accent-glow: rgba(37, 99, 235, 0.2);
+            --text-main: #1e293b;
+            --text-dim: #64748b;
+            --border: rgba(0, 0, 0, 0.08);
+            --3d-shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- Global Reset & 3D Setup --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            perspective: 2000px;
+            transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* --- 3D Sidebar Animation --- */
+        aside {
+            width: 300px;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: 40px 24px;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            transform-style: preserve-3d;
+            animation: sideSlide 0.8s ease-out;
+        }
+
+        @keyframes sideSlide {
+            from {
+                transform: rotateY(-30deg) translateX(-100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: rotateY(0) translateX(0);
+            }
+        }
+
+        .brand {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 60px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transform: translateZ(30px);
+        }
+
+        .nav-link {
+            padding: 16px 20px;
+            border-radius: 16px;
+            color: var(--text-dim);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+            transform-style: preserve-3d;
+        }
+
+        .nav-link:hover {
+            background: var(--surface-hover);
+            color: var(--text-main);
+            transform: translateZ(15px) translateX(5px);
+        }
+
+        .nav-link.active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 10px 20px var(--accent-glow);
+        }
+
+        /* --- Main Content & 3D Scroll --- */
+        main {
+            flex: 1;
+            padding: 50px 60px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            background: radial-gradient(circle at top right, var(--accent-glow), transparent 40%);
+        }
+
+        .view {
+            display: none;
+            transform-style: preserve-3d;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        /* --- Hero 3D Reveal --- */
+        .hero-section {
+            margin-bottom: 60px;
+            perspective: 1500px;
+        }
+
+        .stats-3d-frame {
+            background: linear-gradient(145deg, var(--accent), #7c3aed);
+            color: white;
+            padding: 50px;
+            border-radius: var(--card-radius);
+            box-shadow: 0 30px 60px var(--3d-shadow);
+            transform: rotateX(15deg) rotateY(-10deg) translateZ(0);
+            transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-3d-frame:hover {
+            transform: rotateX(0deg) rotateY(0deg) translateZ(40px);
+        }
+
+        /* --- Grid & Cards 3D Animation --- */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 30px;
+            perspective: 1000px;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 30px;
+            border-radius: var(--card-radius);
+            position: relative;
+            transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-style: preserve-3d;
+            animation: cardEntrance 0.7s backwards;
+        }
+
+        @keyframes cardEntrance {
+            from {
+                opacity: 0;
+                transform: scale(0.8) rotateX(-20deg) translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) rotateX(0) translateY(0);
+            }
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-10px) rotateY(5deg) rotateX(2deg);
+            box-shadow: 0 20px 40px var(--3d-shadow);
+        }
+
+        .card h3 {
+            transform: translateZ(20px);
+        }
+
+        .card p {
+            transform: translateZ(10px);
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            margin: 15px 0;
+        }
+
+        /* --- Interactive Controls --- */
+        .theme-controller {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background: var(--surface);
+            padding: 10px;
+            border-radius: 50px;
+            display: flex;
+            gap: 8px;
+            box-shadow: 0 15px 35px var(--3d-shadow);
+            border: 1px solid var(--border);
+            z-index: 500;
+            transform: translateZ(100px);
+        }
+
+        .theme-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--surface-hover);
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.15) rotate(15deg);
+        }
+
+        .theme-btn.active {
+            background: var(--accent);
+            color: white;
+            transform: scale(1.15);
+            box-shadow: 0 8px 20px var(--accent-glow);
+        }
+
+        .theme-btn.active:hover {
+            transform: scale(1.25) rotate(15deg);
+            box-shadow: 0 12px 30px var(--accent-glow);
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 16px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            transition: 0.4s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 8px 15px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) translateZ(20px);
+            box-shadow: 0 12px 25px var(--accent-glow);
+        }
+
+        /* --- Modal 3D Transition --- */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            backdrop-filter: blur(12px);
+        }
+
+        .modal-content {
+            background: var(--surface);
+            width: 500px;
+            padding: 45px;
+            border-radius: 32px;
+            border: 1px solid var(--border);
+            transform-style: preserve-3d;
+            animation: modalScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes modalScale {
+            from {
+                transform: scale(0.7) rotateX(-40deg);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1) rotateX(0);
+                opacity: 1;
+            }
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 16px;
+            margin-top: 10px;
+            margin-bottom: 25px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            color: var(--text-main);
+            font-size: 1rem;
+        }
+
+        /* --- Delete Indicator --- */
+        .delete-btn {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            width: 35px;
+            height: 35px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .delete-btn:hover {
+            background: #ef4444;
+            color: white;
+            transform: rotate(15deg);
+        }
+
+        /* Tech tags styling */
+        .tech-tag {
+            display: inline-block;
+            background: var(--bg);
+            color: var(--accent);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin: 0 8px 8px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside>
+        <div class="brand"><i class="fas fa-layer-group"></i>PROJECT</div>
+        <div class="nav-link active" onclick="switchView('dash', this)"><i class="fas fa-chart-line"></i> Analytics
+        </div>
+        <div class="nav-link" onclick="switchView('projects', this)"><i class="fas fa-project-diagram"></i> Management
+        </div>
+        <div class="nav-link" onclick="switchView('clients', this)"><i class="fas fa-address-card"></i> Partners</div>
+    </aside>
+
+    <main id="mainContainer">
+        <section id="dash" class="view active">
+            <div class="hero-section">
+                <div class="stats-3d-frame">
+                    <h4 style="opacity: 0.9; letter-spacing: 2px; font-weight: 400;">CORE ENGINE STATUS</h4>
+                    <h1 style="font-size: 3.5rem; margin: 15px 0; font-weight: 800;">Enterprise Ready</h1>
+                    <p style="font-size: 1.1rem; opacity: 0.9;">Total of <span id="p-count">0</span> Active Projects and
+                        <span id="c-count">0</span> Verified Clients.
+                    </p>
+                </div>
+            </div>
+
+            <h2 style="margin-bottom: 30px; font-weight: 800;">Sub-System Health</h2>
+            <div class="data-grid">
+                <div class="card">
+                    <i class="fas fa-server" style="font-size: 2rem; color: var(--accent);"></i>
+                    <h3>Port 4000 Active</h3>
+                    <p>Latency: 12ms. Database connection is stable and encrypted.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-shield-alt" style="font-size: 2rem; color: #10b981;"></i>
+                    <h3>Security Layer</h3>
+                    <p>All CRUD operations are monitored and sanitized in real-time.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="view">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+                <h1>Project Repository</h1>
+                <button class="btn btn-primary" onclick="openModal('project')"><i class="fas fa-plus"></i> Initialize
+                    Project</button>
+            </div>
+            <div class="data-grid" id="projectList"></div>
+        </section>
+
+        <section id="clients" class="view">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+                <h1>Client Network</h1>
+                <button class="btn btn-primary" onclick="openModal('client')"><i class="fas fa-user-plus"></i> Register
+                    Partner</button>
+            </div>
+            <div class="data-grid" id="clientList"></div>
+        </section>
+    </main>
+
+    <div class="theme-controller">
+        <button class="theme-btn" onclick="setTheme('grey')"><i class="fas fa-moon"></i></button>
+        <button class="theme-btn" onclick="setTheme('white')"><i class="fas fa-sun"></i></button>
+    </div>
+
+    <div class="modal" id="formModal">
+        <div class="modal-content" id="modalBody"></div>
+    </div>
+
+    <script>
+        const API = "http://localhost:4000";
+
+        // === Standalone mock backend (works without any server) ===
+        const mockData = {
+            projects: [
+                { id: 1, title: "E-Commerce Platform", desc: "Full-stack online store with payment gateway", tech: "React, Node.js, MongoDB, Stripe" },
+                { id: 2, title: "Mobile Fitness App", desc: "Cross-platform tracker with real-time data", tech: "Flutter, Firebase, Dart" },
+                { id: 3, title: "Analytics Dashboard", desc: "Real-time business intelligence tool", tech: "Vue.js, D3.js, Python" }
+            ],
+            clients: [
+                { id: 1, name: "Acme Corporation", email: "contact@acme.com", status: "Active" },
+                { id: 2, name: "TechNova Solutions", email: "hello@technova.io", status: "Active" },
+                { id: 3, name: "StartupHub", email: "partners@startuphub.co", status: "Pending" }
+            ]
+        };
+
+        // Helper response creators
+        const jsonResponse = (data, status = 200) => new Response(JSON.stringify(data), {
+            status,
+            headers: { 'Content-Type': 'application/json' }
+        });
+        const noContentResponse = () => new Response(null, { status: 204 });
+
+        // Override fetch for mock API
+        const originalFetch = window.fetch;
+        window.fetch = async (url, options = {}) => {
+            await new Promise(r => setTimeout(r, 300)); // Fake network delay
+
+            const method = options.method || 'GET';
+
+            // Projects
+            if (url === `${API}/projects`) {
+                if (method === 'GET') return jsonResponse(mockData.projects);
+                if (method === 'POST') {
+                    const body = JSON.parse(options.body);
+                    const newId = Math.max(...mockData.projects.map(p => p.id), 0) + 1;
+                    const newItem = { id: newId, ...body };
+                    mockData.projects.push(newItem);
+                    return jsonResponse(newItem, 201);
+                }
+            }
+            if (url.startsWith(`${API}/projects/`) && method === 'DELETE') {
+                const id = parseInt(url.split('/').pop());
+                mockData.projects = mockData.projects.filter(p => p.id !== id);
+                return noContentResponse();
+            }
+
+            // Clients
+            if (url === `${API}/clients`) {
+                if (method === 'GET') return jsonResponse(mockData.clients);
+                if (method === 'POST') {
+                    const body = JSON.parse(options.body);
+                    const newId = Math.max(...mockData.clients.map(c => c.id), 0) + 1;
+                    const newItem = { id: newId, ...body };
+                    mockData.clients.push(newItem);
+                    return jsonResponse(newItem, 201);
+                }
+            }
+            if (url.startsWith(`${API}/clients/`) && method === 'DELETE') {
+                const id = parseInt(url.split('/').pop());
+                mockData.clients = mockData.clients.filter(c => c.id !== id);
+                return noContentResponse();
+            }
+
+            // Fallback to real fetch if needed
+            return originalFetch(url, options);
+        };
+
+        let state = { projects: [], clients: [] };
+        let currentScroll = 0;
+
+        // Navigation & Theme
+        function switchView(id, el) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            el.classList.add('active');
+            refreshData(true);
+        }
+
+        function setTheme(theme) {
+            if (theme === 'white') {
+                document.body.setAttribute('data-theme', 'white');
+            } else {
+                document.body.removeAttribute('data-theme');
+            }
+
+            const themeButtons = document.querySelectorAll('.theme-controller .theme-btn');
+            themeButtons.forEach((btn, index) => {
+                btn.classList.toggle('active', (theme === 'white' && index === 1) || (theme !== 'white' && index === 0));
+            });
+        }
+
+        // Data handling
+        async function refreshData(resetScroll = false) {
+            try {
+                const main = document.getElementById('mainContainer');
+                currentScroll = resetScroll ? 0 : main.scrollTop;
+
+                const [pRes, cRes] = await Promise.all([
+                    fetch(`${API}/projects`),
+                    fetch(`${API}/clients`)
+                ]);
+
+                state.projects = await pRes.json();
+                state.clients = await cRes.json();
+
+                renderAll();
+
+                if (!resetScroll) {
+                    main.scrollTo({ top: currentScroll, behavior: 'instant' });
+                }
+            } catch (err) {
+                console.error("Data refresh failed:", err);
+            }
+        }
+
+        function renderAll() {
+            document.getElementById('p-count').innerText = state.projects.length;
+            document.getElementById('c-count').innerText = state.clients.length;
+
+            // Projects
+            const pList = document.getElementById('projectList');
+            pList.innerHTML = state.projects.map((p, i) => `
+                <div class="card" style="animation-delay: ${i * 0.05}s">
+                    <div style="display:flex; justify-content:space-between; align-items:start;">
+                        <h3 style="font-weight: 800;">${p.title}</h3>
+                        <button class="delete-btn" onclick="deleteItem('projects',${p.id})">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                    <p>${p.desc}</p>
+                    <div style="margin-top:20px;">
+                        ${p.tech.split(',').map(t => `<span class="tech-tag">${t.trim()}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            // Clients
+            const cList = document.getElementById('clientList');
+            cList.innerHTML = state.clients.map((c, i) => `
+                <div class="card" style="border-left: 5px solid var(--accent); animation-delay: ${i * 0.05}s">
+                    <div style="display:flex; justify-content:space-between; align-items:start;">
+                        <h3 style="font-weight: 800;">${c.name}</h3>
+                        <button class="delete-btn" onclick="deleteItem('clients',${c.id})">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                    <p style="color:var(--accent); font-family:'JetBrains Mono';">${c.email}</p>
+                    <div style="margin-top: 15px; display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:0.8rem; font-weight:800; opacity:0.6;">STATUS</span>
+                        <span style="color: ${c.status === 'Active' ? '#10b981' : '#f59e0b'}; font-weight:800;">● ${c.status}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // CRUD operations with proper error handling
+        async function deleteItem(endpoint, id) {
+            if (!confirm("Confirm removal from database?")) return;
+
+            try {
+                const response = await fetch(`${API}/${endpoint}/${id}`, { method: 'DELETE' });
+                if (!response.ok) throw new Error("Server error");
+                refreshData();
+            } catch (err) {
+                alert("Deletion failed. Please try again.");
+            }
+        }
+
+        function openModal(type) {
+            const body = document.getElementById('modalBody');
+            if (type === 'project') {
+                body.innerHTML = `
+                    <h2 style="margin-bottom:30px; font-weight:800;">New Project Node</h2>
+                    <input type="text" id="pTitle" placeholder="Internal Name" required>
+                    <textarea id="pDesc" placeholder="Functional description..." rows="3"></textarea>
+                    <input type="text" id="pTech" placeholder="Tech Stacks (CSV format)">
+                    <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="saveItem('projects')">COMMIT TO REPO</button>
+                `;
+            } else {
+                body.innerHTML = `
+                    <h2 style="margin-bottom:30px; font-weight:800;">Register Client</h2>
+                    <input type="text" id="cName" placeholder="Full Organization Name" required>
+                    <input type="email" id="cEmail" placeholder="Primary Contact Email" required>
+                    <select id="cStatus">
+                        <option value="Active">Operational</option>
+                        <option value="Pending">Onboarding</option>
+                    </select>
+                    <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="saveItem('clients')">ADD TO NETWORK</button>
+                `;
+            }
+            document.getElementById('formModal').style.display = 'flex';
+        }
+
+        async function saveItem(endpoint) {
+            let data = {};
+            if (endpoint === 'projects') {
+                const title = document.getElementById('pTitle').value.trim();
+                if (!title) return alert("Title is required");
+                data = {
+                    title: title,
+                    desc: document.getElementById('pDesc').value.trim() || "No description provided.",
+                    tech: document.getElementById('pTech').value.trim() || "Vanilla JS"
+                };
+            } else {
+                const name = document.getElementById('cName').value.trim();
+                if (!name) return alert("Name is required");
+                data = {
+                    name: name,
+                    email: document.getElementById('cEmail').value.trim(),
+                    status: document.getElementById('cStatus').value
+                };
+            }
+
+            try {
+                const res = await fetch(`${API}/${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                if (!res.ok) throw new Error("Server error");
+                document.getElementById('formModal').style.display = 'none';
+                refreshData();
+            } catch (err) {
+                alert("Save failed. Please try again.");
+            }
+        }
+
+        // Close modal on background click
+        window.onclick = (e) => {
+            if (e.target.className === 'modal') {
+                document.getElementById('formModal').style.display = 'none';
+            }
+        };
+
+        // Initial load
+        window.onload = () => {
+            refreshData(true);
+            setTheme('grey');
+        };
+    </script>
+</body>
+
+</html>
